@@ -11,10 +11,10 @@
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        mapbox:center_latitude="41.885"
-        mapbox:center_longitude="-87.679"
-        mapbox:tilt="20"
-        mapbox:zoom="12"
+        mapbox:center_latitude="48.5"
+        mapbox:center_longitude="14.105"
+        mapbox:tilt="25"
+        mapbox:zoom="10"
 
         />
 </RelativeLayout>
