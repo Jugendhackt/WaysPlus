@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
-    /*@Override
+    @Override
     public void onResume() {
         super.onResume();
         map.onResume();
@@ -42,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        map.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onLowMemory() {
         super.onLowMemory();
         map.onLowMemory();
@@ -57,5 +51,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         map.onDestroy();
-    }*/
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        map.onSaveInstanceState(outState);
+    }
 }
