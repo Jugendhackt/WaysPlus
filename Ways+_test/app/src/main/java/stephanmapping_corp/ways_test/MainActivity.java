@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MapView mapView;
     private MapboxMap map;
-    private FloatingActionButton floatingActionButton;
+    //private FloatingActionButton floatingActionButton;
     private LocationServices locationServices;
     private static final int PERMISSIONS_LOCATION = 0;
 
@@ -43,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
                 map = mapboxMap;
+                toggleGps(true);
             }
 
         });
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.location_toggle_fab);
+        /*floatingActionButton = (FloatingActionButton) findViewById(R.id.location_toggle_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     toggleGps(!map.isMyLocationEnabled());
                 }
             }
-        });
+        }); */
     }
 
 
@@ -124,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            floatingActionButton.setImageResource(R.drawable.ic_location_disabled_24dp);
+           // floatingActionButton.setImageResource(R.drawable.ic_location_disabled_24dp);
         } else {
-            floatingActionButton.setImageResource(R.drawable.ic_my_location_24dp);
+            //floatingActionButton.setImageResource(R.drawable.ic_my_location_24dp);
         }
         // Enable or disable the location layer on the map
         map.setMyLocationEnabled(enabled);
