@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mapbox.mapboxsdk.MapboxAccountManager;
+import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         // Create a mapView
         map = (MapView) findViewById(R.id.mapview);
         map.onCreate(savedInstanceState);
+        map.setStyleUrl("mapbox://styles/x4m1/civ571dpv001r2ilcz5xckbxa");
         map.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
     }
     @Override
     public void onResume() {
