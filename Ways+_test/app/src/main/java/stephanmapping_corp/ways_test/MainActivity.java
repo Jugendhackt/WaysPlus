@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_LOCATION = 0;
     private DirectionsRoute currentRoute;
     private Position origin = Position.fromCoordinates(-3.588098, 37.176164);
-    private Position destination = Position.fromCoordinates(-3.601845, 37.184080);
+    private Position destination = Position.fromCoordinates(14.2874028, 48.2953489);
+    private Position destination2 = Position.fromCoordinates(46.1441493, 68.7433671);
 
 
 
@@ -147,19 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location), 16));
                         locationServices.removeLocationListener(this);
                         origin = Position.fromCoordinates(location.getLongitude(), location.getLatitude());
-                        map.addMarker(new MarkerOptions()
-                                .position(new LatLng(origin.getLatitude(), origin.getLongitude()))
-                                .title("Origin")
-                                .snippet("Alhambra"));
-                        map.addMarker(new MarkerOptions()
-                                .position(new LatLng(destination.getLatitude(), destination.getLongitude()))
-                                .title("Destination")
-                                .snippet("Plaza del Triunfo"));
-                        try {
-                            getRoute(origin, destination);
-                        } catch (ServicesException servicesException) {
-                            servicesException.printStackTrace();
-                        }
+                        calculateRoute();
                     }
                 }
             });
@@ -170,7 +159,40 @@ public class MainActivity extends AppCompatActivity {
         // Enable or disable the location layer on the map
         map.setMyLocationEnabled(enabled);
     }
-    private void getRoute(Position origin, Position destination) throws ServicesException {
+
+    private void calculateRoute() {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(origin.getLatitude(), origin.getLongitude()))
+                .title("Origin")
+                .snippet("Alhambra"));
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(destination.getLatitude(), destination.getLongitude()))
+                .title("Destination")
+                .snippet("Plaza del Triunfo"));
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(destination2.getLatitude(), destination2.getLongitude()))
+                .title("Destination2")
+                .snippet("XYZ"));
+        try {
+            getRoute(origin, destination);
+        } catch (ServicesException servicesException) {
+            servicesException.printStackTrace();
+        }
+    }
+
+
+    private void
+
+
+
+
+
+
+
+
+
+
+    getRoute(Position origin, Position destination) throws ServicesException {
 
         MapboxDirections client = new MapboxDirections.Builder()
                 .setOrigin(origin)
