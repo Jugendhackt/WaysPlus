@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.MapboxAccountManager;
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.annotations.Polyline;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Position> positions;
     private boolean wayplus = false;
     private Polyline curmap;
+    private ArrayList<Marker> markers = new ArrayList<>();
 
 
     @Override
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 wayplus=!wayplus;
                 if (curmap != null) {
                     curmap.remove();
+                }
+                for (Marker marker: markers) {
+                    marker.remove();
                 }
                 redrawRoute();
             }
@@ -190,11 +195,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculateRoute(ArrayList<Position> positions) {
+        markers.clear();
         for (Position position: positions) {
-            map.addMarker(new MarkerOptions()
+            Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(position.getLatitude(), position.getLongitude()))
                     .title("Origin")
                     .snippet("Alhambra"));
+            markers.add(marker);
         }
         try {
             getRoute(positions);
