@@ -29,4 +29,29 @@
         tools:ignore="VectorDrawableCompat"
         app:backgroundTint="@color/colorAccent"/> -->
 
+    <RelativeLayout
+        android:id="@+id/InnerRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBetterRoute"
+            android:text="Optimize"
+            android:background="#CC3F51B5"
+            android:drawablePadding="6dp"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="5dp"></Button>
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.SortedList;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.MapboxAccountManager;
@@ -77,7 +78,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
+        Button button = (Button)findViewById(R.id.btnBetterRoute);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wayplus=!wayplus;
+                redrawRoute();
+            }
+        });
         /*floatingActionButton = (FloatingActionButton) findViewById(R.id.location_toggle_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,15 +161,7 @@ public class MainActivity extends AppCompatActivity {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location), 16));
                         locationServices.removeLocationListener(this);
                         positions.set(0, Position.fromCoordinates(location.getLongitude(), location.getLatitude()));
-                        ArrayList<Position> route;
-                        if (wayplus) {
-                            route = positions;
-                        } else {
-                            route = new ArrayList<Position>();
-                            route.add(positions.get(0));
-                            route.add(positions.get(positions.size()-1));
-                        }
-                        calculateRoute(route);
+                        redrawRoute();
                     }
                 }
             });
@@ -171,6 +171,18 @@ public class MainActivity extends AppCompatActivity {
         }
         // Enable or disable the location layer on the map
         map.setMyLocationEnabled(enabled);
+    }
+
+    private void redrawRoute() {
+        ArrayList<Position> route;
+        if (wayplus) {
+            route = positions;
+        } else {
+            route = new ArrayList<Position>();
+            route.add(positions.get(0));
+            route.add(positions.get(positions.size()-1));
+        }
+        calculateRoute(route);
     }
 
     private void calculateRoute(ArrayList<Position> positions) {
