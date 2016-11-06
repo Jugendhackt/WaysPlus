@@ -49,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private LocationServices locationServices;
     private static final int PERMISSIONS_LOCATION = 0;
     private DirectionsRoute currentRoute;
-    private Position origin = Position.fromCoordinates(-3.588098, 37.176164);
-    private Position destination = Position.fromCoordinates(14.2874028, 48.2953489);
-    private Position destination2 = Position.fromCoordinates(46.1441493, 68.7433671);
     private ArrayList<Position> positions;
+    private boolean wayplus = false;
 
 
 
@@ -61,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         positions = new ArrayList<>();
         positions.add(Position.fromCoordinates(-3.588098, 37.176164));
-        positions.add(Position.fromCoordinates(14.2874028, 48.2953489));
-        positions.add(Position.fromCoordinates(14.35, 48.3));
+        positions.add(Position.fromCoordinates(14.292670, 48.309464));
+        positions.add(Position.fromCoordinates(14.297481, 48.311685));
 
         MapboxAccountManager.start(this, getString(R.string.access_token));
         setContentView(R.layout.activity_main);
@@ -155,7 +153,15 @@ public class MainActivity extends AppCompatActivity {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location), 16));
                         locationServices.removeLocationListener(this);
                         positions.set(0, Position.fromCoordinates(location.getLongitude(), location.getLatitude()));
-                        calculateRoute(positions);
+                        ArrayList<Position> route;
+                        if (wayplus) {
+                            route = positions;
+                        } else {
+                            route = new ArrayList<Position>();
+                            route.add(positions.get(0));
+                            route.add(positions.get(positions.size()-1));
+                        }
+                        calculateRoute(route);
                     }
                 }
             });
