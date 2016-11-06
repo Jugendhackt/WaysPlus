@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.Polyline;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private DirectionsRoute currentRoute;
     private ArrayList<Position> positions;
     private boolean wayplus = false;
-
+    private Polyline curmap;
 
 
     @Override
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 wayplus=!wayplus;
+                if (curmap != null) {
+                    curmap.remove();
+                }
                 redrawRoute();
             }
         });
@@ -255,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Draw Points on MapView
-        map.addPolyline(new PolylineOptions()
+        curmap = map.addPolyline(new PolylineOptions()
                 .add(points)
                 .color(Color.parseColor("#009688"))
                 .width(5));
