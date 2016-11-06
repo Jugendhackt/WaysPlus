@@ -34,6 +34,7 @@ import com.mapbox.services.directions.v5.MapboxDirections;
 import com.mapbox.services.directions.v5.models.DirectionsResponse;
 import com.mapbox.services.directions.v5.models.DirectionsRoute;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,12 +52,18 @@ public class MainActivity extends AppCompatActivity {
     private Position origin = Position.fromCoordinates(-3.588098, 37.176164);
     private Position destination = Position.fromCoordinates(14.2874028, 48.2953489);
     private Position destination2 = Position.fromCoordinates(46.1441493, 68.7433671);
+    private ArrayList<Position> positions;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        positions = new ArrayList<>();
+        positions.add(Position.fromCoordinates(-3.588098, 37.176164));
+        positions.add(Position.fromCoordinates(14.2874028, 48.2953489));
+        positions.add(Position.fromCoordinates(14.35, 48.3));
+
         MapboxAccountManager.start(this, getString(R.string.access_token));
         setContentView(R.layout.activity_main);
         locationServices = LocationServices.getLocationServices(MainActivity.this);
@@ -147,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
                         // listener is registered again and will adjust the camera once again.
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location), 16));
                         locationServices.removeLocationListener(this);
-                        origin = Position.fromCoordinates(location.getLongitude(), location.getLatitude());
-                        calculateRoute();
+                        positions.set(0, Position.fromCoordinates(location.getLongitude(), location.getLatitude()));
+                        calculateRoute(positions);
                     }
                 }
             });
@@ -160,43 +167,25 @@ public class MainActivity extends AppCompatActivity {
         map.setMyLocationEnabled(enabled);
     }
 
-    private void calculateRoute() {
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(origin.getLatitude(), origin.getLongitude()))
-                .title("Origin")
-                .snippet("Alhambra"));
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(destination.getLatitude(), destination.getLongitude()))
-                .title("Destination")
-                .snippet("Plaza del Triunfo"));
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(destination2.getLatitude(), destination2.getLongitude()))
-                .title("Destination2")
-                .snippet("XYZ"));
+    private void calculateRoute(ArrayList<Position> positions) {
+        for (Position position: positions) {
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(position.getLatitude(), position.getLongitude()))
+                    .title("Origin")
+                    .snippet("Alhambra"));
+        }
         try {
-            getRoute(origin, destination);
+            getRoute(positions);
         } catch (ServicesException servicesException) {
             servicesException.printStackTrace();
         }
     }
 
 
-    private void
-
-
-
-
-
-
-
-
-
-
-    getRoute(Position origin, Position destination) throws ServicesException {
+    private void getRoute(ArrayList<Position> positions) throws ServicesException {
 
         MapboxDirections client = new MapboxDirections.Builder()
-                .setOrigin(origin)
-                .setDestination(destination)
+                .setCoordinates(positions)
                 .setProfile(DirectionsCriteria.PROFILE_CYCLING)
                 .setAccessToken(MapboxAccountManager.getInstance().getAccessToken())
                 .build();
