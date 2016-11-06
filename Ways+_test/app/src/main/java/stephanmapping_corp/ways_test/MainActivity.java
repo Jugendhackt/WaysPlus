@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             // If we have the last location of the user, we can move the camera to that position.
             Location lastLocation = locationServices.getLastLocation();
             if (lastLocation != null) {
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation), 16));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation), 14));
             }
 
             locationServices.addLocationListener(new LocationListener() {
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         // listener so the camera isn't constantly updating when the user location
                         // changes. When the user disables and then enables the location again, this
                         // listener is registered again and will adjust the camera once again.
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location), 16));
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location), 14));
                         locationServices.removeLocationListener(this);
                         positions.set(0, Position.fromCoordinates(location.getLongitude(), location.getLatitude()));
                         redrawRoute();
