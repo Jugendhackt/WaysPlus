@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean wayplus = false;
     private Polyline curmap;
     private ArrayList<Marker> markers = new ArrayList<>();
+    private Button button;
 
 
     @Override
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        Button button = (Button)findViewById(R.id.btnBetterRoute);
+        button = (Button)findViewById(R.id.btnBetterRoute);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 for (Marker marker: markers) {
                     marker.remove();
+                }
+                if (wayplus) {
+                    button.setText("DIRECT");
+                } else  {
+                    button.setText("OPTIMIZE");
                 }
                 redrawRoute();
             }
